@@ -5,8 +5,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
@@ -14,6 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(properties = {
+        "spring.datasource.url=jdbc:postgresql://localhost:5432/menudb",
+        "spring.datasource.driver-class-name=org.postgresql.Driver",
+        "spring.datasource.username=menu_user",
+        "spring.datasource.password=menu_pass",
+        "spring.jpa.hibernate.ddl-auto=validate",
+        "spring.sql.init.mode=never"
+})
 class UserRepositoryTest {
 
     @Autowired
@@ -49,9 +60,12 @@ class UserRepositoryTest {
                 .build();
 
         // when & then
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            userRepository.saveAndFlush(user);  // saveAndFlush를 써야 DB 까지 실제 반영이 이뤄지고 제약조건 위반이 감지됨
-        });
+        DataIntegrityViolationException exception =
+                assertThrows(DataIntegrityViolationException.class, () -> {
+                    userRepository.saveAndFlush(user);  // saveAndFlush를 써야 DB 까지 실제 반영이 이뤄지고 제약조건 위반이 감지됨
+                });
+        System.out.println("=== NOT NULL 예외 메세지 ===");
+        System.out.println(exception.getMessage());
     }
 
     @Test
@@ -77,4 +91,5 @@ class UserRepositoryTest {
             userRepository.saveAndFlush(duplicate);
         });
     }
+
 }
