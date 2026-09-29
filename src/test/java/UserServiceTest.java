@@ -1,8 +1,7 @@
 import com.sprint.mission.BeforeEachAfterEach.UserService;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * > Task :testClasses
@@ -57,5 +56,22 @@ public class UserServiceTest {
 
         assertNotNull(result);
         System.out.println("createUser_shouldNotReturnNull 실행");
+    }
+
+    @Test
+    @DisplayName("빈 문자열로 유저를 생성하려고 하면 IllegalArgumentException 발생")
+    void shouldThrowIllegalArgumentException() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    userService.create(null);
+                });
+    }
+
+    @Test
+    void shouldNotThrowAnyException() {
+        assertDoesNotThrow(() -> {
+            userService.create("ek");
+        });
     }
 }

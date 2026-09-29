@@ -15,4 +15,5 @@ public class UserTest {
                 () -> assertNotNull(user));
         System.out.println("UserTest - userValidation 실행");
     }
+
 }
