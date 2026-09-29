@@ -35,6 +35,33 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    // TestFixture - 기본 사용자 생성
+    private User createUser(String email, String name) {
+        return User.builder()
+                .email(email)
+                .name(name)
+                .status("ACTIVE")
+                .build();
+    }
+
+    // TestFixture - 상태를 포함한 사용자 생성
+    private User createUserWithStatus(String email, String name, String status) {
+        return User.builder()
+                .email(email)
+                .name(name)
+                .status(status)
+                .build();
+    }
+
+    // TestFixture - 비활성 사용자
+    private User createInactiveUser() {
+        return User.builder()
+                .email("inactive@test.com")
+                .name("비활성유저")
+                .status("INACTIVE")
+                .build();
+    }
+
     @BeforeEach // 각 테스트 메서드 실행 전에 공통으로 필요한 데이터를 사전에 세팅할 수 있도록 도와준 - 반복되는 준비 작업 캡슐화
     void setUp() {
         userRepository.save(new User(3L, "a@example.com", "Alice", "ONLINE"));
@@ -54,11 +81,7 @@ class UserRepositoryTest {
     @DisplayName("사용자 저장 후 정상적으로 조회되어야 한다")
     void whenSaveUser_thenItShouldBePersisted() {
         // given
-        User user = User.builder()
-                .email("test@example.com")
-                .name("tester")
-                .status("ACTIVE")
-                .build();
+        User user = createUser("test@example.com", "tester");
 
         // when
         userRepository.save(user);
@@ -73,11 +96,7 @@ class UserRepositoryTest {
     // 테스트 대상 엔티티의 필드 제약 (@NotNull, @Column(nullable = false))을 데이터베이스와 동시에 검증
     void givenMissingEmail_whenSaveUser_thenThrowsException() {
         // given
-        User user = User.builder()
-                .email(null)
-                .name("tester")
-                .status("ACTIVE")
-                .build();
+        User user = createUser(null, "tester");
 
         // when & then
         DataIntegrityViolationException exception =
