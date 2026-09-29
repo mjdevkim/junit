@@ -2,6 +2,7 @@ package com.sprint.mission.repository;
 
 import com.sprint.mission.entity.User;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,20 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(properties = {
+        // 1. 접속 url
         "spring.datasource.url=jdbc:postgresql://localhost:5432/menudb",
+        // 2. JDBC 드라이버
         "spring.datasource.driver-class-name=org.postgresql.Driver",
+        // 3. Username
         "spring.datasource.username=menu_user",
+        // 4. Password
         "spring.datasource.password=menu_pass",
+        // etc. DB 관련
         "spring.jpa.hibernate.ddl-auto=validate",
         "spring.sql.init.mode=never"
 })
@@ -29,6 +34,21 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @BeforeEach // 각 테스트 메서드 실행 전에 공통으로 필요한 데이터를 사전에 세팅할 수 있도록 도와준 - 반복되는 준비 작업 캡슐화
+    void setUp() {
+        userRepository.save(new User(3L, "a@example.com", "Alice", "ONLINE"));
+        userRepository.save(new User(4L, "b@example.com", "Bob", "ONLINE"));
+    }
+
+    @Test
+    @DisplayName("기본 유저가 4명 존재해야 한다")
+    void givenSetup_whenCountUsers_thenReturns2() {
+        // when
+        long count = userRepository.count();
+        // then
+        assertEquals(4, count);
+    }
 
     @Test
     @DisplayName("사용자 저장 후 정상적으로 조회되어야 한다")
