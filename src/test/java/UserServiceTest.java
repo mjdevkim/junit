@@ -42,6 +42,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 생성시 이름을 반환해야 한다.")
     void createUser_shouldReturnName() {
         String result = userService.create("kim");
 
@@ -50,6 +51,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("사용자 생성은 반드시 값을 반환해야 한다.")
     void createUser_shouldNotReturnNull() {
         String result = userService.create("lee");
 
