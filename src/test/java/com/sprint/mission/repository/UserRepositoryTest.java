@@ -131,4 +131,29 @@ class UserRepositoryTest {
         });
     }
 
+    @Test
+    @DisplayName("삭제 이후 DB에 해당 사용자가 존재하지 않아야 한다")
+    void givenDeletedUser_whenCheckDb_thenUserShouldNotExist() {
+        // given
+        User user = userRepository.save(
+                createUserWithStatus(
+                        "delete@example.com",
+                        "Delete",
+                        "ACTIVE"
+                )
+        );
+        Long id = user.getId();
+
+        // when
+        userRepository.delete(user);
+
+        // flush를 통해 db까지 반영
+        userRepository.flush();
+
+        boolean exists = userRepository.existsById(id);
+
+        // then
+        assertFalse(exists);
+    }
+
 }
