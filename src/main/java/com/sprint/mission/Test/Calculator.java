@@ -1,4 +1,4 @@
-package com.sprint.mission;
+package com.sprint.mission.Test;
 
 public class Calculator {
 
