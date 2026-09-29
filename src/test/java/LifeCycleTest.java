@@ -3,6 +3,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)   // 붙이지 않으면 @Order 무시됨
 public class LifeCycleTest {
     private int counter = 0;
 
@@ -17,6 +18,7 @@ public class LifeCycleTest {
     }
 
     @Test
+    @Order(1)
     void test1() {
         counter++;
         System.out.println("test1 counter = " + counter);
@@ -24,6 +26,7 @@ public class LifeCycleTest {
     }
 
     @Test
+    @Order(2)
     void test2() {
         counter++;
         System.out.println("test2 counter = " + counter);
