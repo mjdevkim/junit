@@ -1,20 +1,46 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.5'
 }
 
-group = 'com.sprint.mission'
-version = '1.0-SNAPSHOT'
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'SpringTDD'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:6.0.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA와 Spring Data Repository 사용
+    implementation 'org.springframework.boot:spring-boot-starter-web'   // JUnit 5, AssertJ, Mockito 등 테스트 도구 제공
+
+    // DB (운영 DB)
+    runtimeOnly 'org.postgresql:postgresql' // Postgres 연결 지원
+
+    // 테스트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'    // Junit 세트스 실행 지원
+
+    // (선택) 테스트용 인메모리 DB
+    testRuntimeOnly 'com.h2database:h2' // 테스트 실행 시 사용할 인메모리 DB
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
-test {
+tasks.named('test') {  // gradle에서 Junit 5 테스트를 실행하도록 해준다
     useJUnitPlatform()
 }
