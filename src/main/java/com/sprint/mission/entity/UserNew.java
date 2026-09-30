@@ -1,18 +1,15 @@
 package com.sprint.mission.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users_new")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class User {
+@Builder(toBuilder = true) // 🔥 중요
+public class UserNew {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +23,7 @@ public class User {
 
     @Column(nullable = false)
     private String status;
+
+    @Column
+    private String password; // 🔥 추가
 }
