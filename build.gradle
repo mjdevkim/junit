@@ -23,6 +23,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA와 Spring Data Repository 사용
     implementation 'org.springframework.boot:spring-boot-starter-web'   // JUnit 5, AssertJ, Mockito 등 테스트 도구 제공
 
+    // Head06: 요청 검증 및 보안 테스트
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
     // DB (운영 DB)
     runtimeOnly 'org.postgresql:postgresql' // Postgres 연결 지원
 

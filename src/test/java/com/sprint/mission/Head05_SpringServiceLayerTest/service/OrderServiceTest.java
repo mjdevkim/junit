@@ -37,5 +37,6 @@ class OrderServiceTest {
         // then
         assertEquals(120000, order.getFinalAmount());
         assertEquals(30000, order.getDiscountAmount());
+        System.out.println("=== vip 로직 테스트 완료===");
     }
 }

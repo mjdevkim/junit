@@ -1,0 +1,19 @@
+package com.sprint.mission.Head06_ControllerTest.service;
+
+
+import com.sprint.mission.Head06_ControllerTest.dto.product.CreateProductRequest;
+import com.sprint.mission.Head06_ControllerTest.dto.PageResponse;
+import com.sprint.mission.Head06_ControllerTest.dto.product.ProductResponse;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+@Service
+public interface ProductService {
+
+    PageResponse<ProductResponse> getProducts(Pageable pageable, String category);
+
+    ProductResponse createProduct(CreateProductRequest request, MultipartFile image);
+
+    ProductResponse getProductById(Long id);
+}
