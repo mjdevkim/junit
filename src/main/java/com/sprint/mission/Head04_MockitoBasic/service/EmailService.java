@@ -1,4 +1,4 @@
-package com.sprint.mission.service;
+package com.sprint.mission.Head04_MockitoBasic.service;
 
 import org.springframework.stereotype.Service;
 
@@ -15,4 +15,6 @@ public interface EmailService {
     String getLastMessage();
 
     void sendBatch(List<String> messages);
+
+    boolean sendWelcomeEmail(String email, String name);
 }

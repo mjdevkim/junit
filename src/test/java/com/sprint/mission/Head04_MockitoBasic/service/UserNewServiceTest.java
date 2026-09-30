@@ -1,7 +1,7 @@
-package com.sprint.mission.service;
+package com.sprint.mission.Head04_MockitoBasic.service;
 
-import com.sprint.mission.entity.UserNew;
-import com.sprint.mission.repository.UserNewRepository;
+import com.sprint.mission.Head04_MockitoBasic.entity.UserNew;
+import com.sprint.mission.Head04_MockitoBasic.repository.UserNewRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

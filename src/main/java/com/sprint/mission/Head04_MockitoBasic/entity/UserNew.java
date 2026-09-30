@@ -1,4 +1,4 @@
-package com.sprint.mission.entity;
+package com.sprint.mission.Head04_MockitoBasic.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
