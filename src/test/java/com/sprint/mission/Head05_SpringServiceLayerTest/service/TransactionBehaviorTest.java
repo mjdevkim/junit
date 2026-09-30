@@ -1,5 +1,6 @@
 package com.sprint.mission.Head05_SpringServiceLayerTest.service;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.sprint.mission.Head05_SpringServiceLayerTest.entity.Account;
 import com.sprint.mission.Head05_SpringServiceLayerTest.entity.AccountStatus;
 import com.sprint.mission.Head05_SpringServiceLayerTest.entity.TransactionHistory;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -68,6 +70,8 @@ public class TransactionBehaviorTest {
 
     @Test
     @DisplayName("중첩 트랜잭션 실패시 전체 롤백")
+    @Transactional(propagation = Propagation.NOT_SUPPORTED) // 이 테스트 메서드는 transction없이 실행
+    // "트랜잭션을 시작한 쪽이 테스트이므로, 테스트가 끝날 때 롤백하는 것입니다."
     void nestedTransactionTest() {
         // given
         Account account = accountRepository.save(new Account("test", 100000));
